@@ -1,134 +1,33 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-
-
--------------------------------------
 # Project Management API
 
-> A multi-tenant REST API built with NestJS, TypeScript, and PostgreSQL
+> A production-ready multi-tenant REST API built with NestJS, TypeScript, and PostgreSQL. Inspired by tools like Jira and Asana.
+
+![CI](https://github.com/Martin-Rwanda/project-management-api-nest/actions/workflows/ci.yml/badge.svg)
 
 ## 📋 Table of Contents
-- [Overview]
-- [Tech Stack]
-- [Architecture]
-- [Getting Started]
-- [Environment Variables]
-- [API Documentation]
-- [Database Schema]
-- [Running Tests]
-- [Deployment]
+
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [API Documentation](#api-documentation)
+- [Running Tests](#running-tests)
+- [Database Migrations](#database-migrations)
+- [Project Structure](#project-structure)
+
+## 🌍 Overview
+
+This is a multi-tenant project management API where:
+
+- Users can create and join **organizations**
+- Each organization can have multiple **projects**
+- Each project can have multiple **tasks**
+- Each task can have multiple **comments**
+- Users have roles within organizations: `admin`, `member`, `viewer`
+- All data is scoped and isolated per organization
 
 ## 🛠 Tech Stack
-- NestJS + TypeScript
-- PostgreSQL + TypeORM
-- Redis (caching + queues)
-- Docker + Docker Compose
-- JWT Authentication
-- Swagger (API Docs)
-- GitHub Actions (CI/CD)
-```
-
----
-
-**Step 4: Tech Stack Decision (lock this in)**
-
-Before coding, decide and commit to:
 
 | Concern | Tool |
 |---|---|
@@ -138,55 +37,170 @@ Before coding, decide and commit to:
 | ORM | TypeORM |
 | Auth | JWT + Refresh Tokens |
 | Validation | class-validator + class-transformer |
-| Docs | Swagger (@nestjs/swagger) |
-| Config | @nestjs/config + .env |
-| Containerization | Docker + docker-compose |
-| CI | GitHub Actions |
-| Code style | ESLint + Prettier |
+| Documentation | Swagger / OpenAPI |
+| Containerization | Docker + Docker Compose |
+| CI/CD | GitHub Actions |
+| Testing | Jest |
 
----
+## 🏗 Architecture
 
-**Step 5: Commit Message Convention**
-
-Senior engineers follow **Conventional Commits**. Every commit message looks like this:
+The project follows a clean modular architecture with the repository pattern:
 ```
-feat(auth): add JWT refresh token rotation
-fix(tasks): resolve pagination offset bug
-chore(docker): update postgres image version
-docs(readme): add environment variables section
-refactor(users): extract password hashing to service
+src/
+├── modules/
+│   ├── auth/          # JWT auth, strategies, guards
+│   ├── users/         # User management
+│   ├── organizations/ # Multi-tenancy, member roles
+│   ├── projects/      # Project management
+│   ├── tasks/         # Task management with filters
+│   └── comments/      # Task comments
+├── config/            # App, database, JWT config
+├── database/          # Migrations, seeds, data-source
+└── common/            # Shared decorators, filters, pipes
 ```
 
-Format: `type(scope): short description`
+## 🚀 Getting Started
 
-Types: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `perf`
+### Prerequisites
 
----
+- Node.js v18+
+- Docker + Docker Compose
+- npm
 
-**Step 6: Database Schema (plan before coding)**
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/Martin-Rwanda/project-management-api-nest.git
+cd project-management-api-nest
 
-Here are the core entities:
+# Install dependencies
+npm install
+
+# Copy environment variables
+cp .env.example .env
 ```
-organizations → users (many-to-many via organization_members)
-organizations → projects (one-to-many)
-projects → tasks (one-to-many)
-tasks → comments (one-to-many)
-users → tasks (assigned_to)
 
+### Running with Docker
+```bash
+# Start PostgreSQL and Redis
+docker-compose up -d postgres redis
 
+# Run database migrations
+npm run migration:run
 
+# Start the application
+npm run start:dev
+```
 
-what to do 
-mkdir -p src/modules
-mkdir -p src/common/decorators
-mkdir -p src/common/filters
-mkdir -p src/common/interceptors
-mkdir -p src/common/pipes
-mkdir -p src/common/guards
-mkdir -p src/config
-mkdir -p src/database/migrations
-mkdir -p src/database/seeds
-mkdir -p test/unit
-mkdir -p test/e2e
-mkdir -p docker
-mkdir -p .github/workflows
+The API will be available at `http://localhost:3000/api/v1`
+
+Swagger docs will be available at `http://localhost:3000/api/docs`
+
+## ⚙️ Environment Variables
+```bash
+# App
+PORT=3000
+NODE_ENV=development
+
+# Database
+DB_HOST=localhost
+DB_PORT=5433
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=project_management_db
+
+# JWT
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=15m
+JWT_REFRESH_SECRET=your_jwt_refresh_secret
+JWT_REFRESH_EXPIRES_IN=7d
+
+# Redis
+REDIS_HOST=localhost
+REDIS_PORT=6379
+```
+
+## 📖 API Documentation
+
+Full API documentation is available via Swagger at `/api/docs` when the app is running.
+
+### Main Endpoints
+
+| Method | Endpoint | Description | Auth |
+|---|---|---|---|
+| POST | /api/v1/auth/register | Register a new user | No |
+| POST | /api/v1/auth/login | Login | No |
+| POST | /api/v1/auth/refresh | Refresh access token | Yes |
+| GET | /api/v1/users | Get all users | Yes |
+| GET | /api/v1/users/:id | Get user by id | Yes |
+| POST | /api/v1/organizations | Create organization | Yes |
+| GET | /api/v1/organizations | Get my organizations | Yes |
+| POST | /api/v1/organizations/:id/members | Invite member | Yes |
+| POST | /api/v1/projects | Create project | Yes |
+| GET | /api/v1/projects?organizationId= | Get projects | Yes |
+| POST | /api/v1/tasks | Create task | Yes |
+| GET | /api/v1/tasks?projectId= | Get tasks with filters | Yes |
+| POST | /api/v1/comments | Create comment | Yes |
+| GET | /api/v1/comments?taskId= | Get task comments | Yes |
+
+## 🧪 Running Tests
+```bash
+# Run all unit tests
+npm run test
+
+# Run tests with coverage
+npm run test:cov
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+### Test Coverage
+
+- ✅ UsersService — 8 tests
+- ✅ AuthService — 9 tests
+- ✅ OrganizationsService — 11 tests
+- ✅ ProjectsService — 10 tests
+- ✅ TasksService — 11 tests
+- ✅ CommentsService — 11 tests
+- **Total: 62 tests**
+
+## 🗄 Database Migrations
+```bash
+# Generate a new migration
+npm run migration:generate --name=migration-name
+
+# Run migrations
+npm run migration:run
+
+# Revert last migration
+npm run migration:revert
+```
+
+## 🗂 Project Structure
+```
+src/
+├── modules/
+│   ├── auth/
+│   │   ├── decorators/
+│   │   ├── dto/
+│   │   ├── guards/
+│   │   ├── strategies/
+│   │   ├── tests/
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   └── auth.module.ts
+│   ├── users/
+│   ├── organizations/
+│   ├── projects/
+│   ├── tasks/
+│   └── comments/
+├── config/
+├── database/
+│   └── migrations/
+└── common/
+```
+
+## 👨‍💻 Author
+
+**Martin** — [GitHub](https://github.com/Martin-Rwanda)
