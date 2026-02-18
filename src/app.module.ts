@@ -5,6 +5,7 @@ import { appConfig, databaseConfig, jwtConfig } from './config';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { OrganizationsModule } from './modules/organizations/organizations.module';
+import { ProjectsModule } from './modules/projects/projects.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { OrganizationsModule } from './modules/organizations/organizations.modul
     AuthModule,
     UsersModule,
     OrganizationsModule,
+    ProjectsModule,
   ],
 })
 export class AppModule {}
