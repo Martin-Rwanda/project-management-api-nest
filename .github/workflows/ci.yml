@@ -1,3 +1,69 @@
+# CI without Tests 
+
+# name: CI
+
+# on:
+#   push:
+#     branches: [dev, master]
+#   pull_request:
+#     branches: [dev, master]
+
+# jobs:
+#   lint-and-build:
+#     name: Lint and Build
+#     runs-on: ubuntu-latest
+
+#     services:
+#       postgres:
+#         image: postgres:15-alpine
+#         env:
+#           POSTGRES_USER: postgres
+#           POSTGRES_PASSWORD: postgres123
+#           POSTGRES_DB: project_management_db
+#         ports:
+#           - 5432:5432
+#         options: >-
+#           --health-cmd pg_isready
+#           --health-interval 10s
+#           --health-timeout 5s
+#           --health-retries 5
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: '18'
+#           cache: 'npm'
+
+#       - name: Install dependencies
+#         run: npm ci
+
+#       - name: Run lint
+#         run: npm run lint
+
+#       - name: Build application
+#         run: npm run build
+#         env:
+#           PORT: 3000
+#           NODE_ENV: production
+#           DB_HOST: localhost
+#           DB_PORT: 5432
+#           DB_USER: martin
+#           DB_PASSWORD: 02011997
+#           DB_NAME: project_management_db
+#           JWT_SECRET: ci_jwt_secret
+#           JWT_EXPIRES_IN: 15m
+#           JWT_REFRESH_SECRET: ci_jwt_refresh_secret
+#           JWT_REFRESH_EXPIRES_IN: 7d
+#           REDIS_HOST: localhost
+#           REDIS_PORT: 6379
+
+
+# CI with tests
+
 name: CI
 
 on:
@@ -8,7 +74,7 @@ on:
 
 jobs:
   lint-and-build:
-    name: Lint and Build
+    name: Lint, Test and Build
     runs-on: ubuntu-latest
 
     services:
@@ -42,6 +108,23 @@ jobs:
       - name: Run lint
         run: npm run lint
 
+      - name: Run tests
+        run: npm run test
+        env:
+          PORT: 3000
+          NODE_ENV: test
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: postgres123
+          DB_NAME: project_management_db
+          JWT_SECRET: ci_jwt_secret
+          JWT_EXPIRES_IN: 15m
+          JWT_REFRESH_SECRET: ci_jwt_refresh_secret
+          JWT_REFRESH_EXPIRES_IN: 7d
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+
       - name: Build application
         run: npm run build
         env:
@@ -49,8 +132,8 @@ jobs:
           NODE_ENV: production
           DB_HOST: localhost
           DB_PORT: 5432
-          DB_USER: martin
-          DB_PASSWORD: 02011997
+          DB_USER: postgres
+          DB_PASSWORD: postgres123
           DB_NAME: project_management_db
           JWT_SECRET: ci_jwt_secret
           JWT_EXPIRES_IN: 15m
