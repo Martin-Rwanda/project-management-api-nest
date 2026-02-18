@@ -12,11 +12,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { PaginationDto } from 'common/dto/pagination.dto';
+import { PaginatedResult } from 'common/interfaces/paginated-result.interface';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../auth/guards';
 import { CreateTaskDto, FilterTaskDto, UpdateTaskDto } from './dto';
-import { TaskPriority, TaskStatus } from './entities/task.entity';
-import { Task } from './entities/task.entity';
+import { Task, TaskPriority, TaskStatus } from './entities/task.entity';
 import { TasksService } from './tasks.service';
 
 interface JwtUser {
@@ -42,19 +43,22 @@ export class TasksController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all tasks for a project' })
+  @ApiOperation({ summary: 'Get all tasks for a project with pagination' })
   @ApiQuery({ name: 'projectId', required: true, type: String })
   @ApiQuery({ name: 'status', required: false, enum: TaskStatus })
   @ApiQuery({ name: 'priority', required: false, enum: TaskPriority })
   @ApiQuery({ name: 'assignedTo', required: false, type: String })
-  @ApiResponse({ status: 200, description: 'Returns all tasks' })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  @ApiResponse({ status: 200, description: 'Returns paginated tasks' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   async findAll(
     @Query('projectId') projectId: string,
     @Query() filters: FilterTaskDto,
+    @Query() pagination: PaginationDto,
     @CurrentUser() user: JwtUser,
-  ): Promise<Task[]> {
-    return this.tasksService.findByProjectId(projectId, filters, user.id);
+  ): Promise<PaginatedResult<Task>> {
+    return this.tasksService.findByProjectId(projectId, filters, user.id, pagination);
   }
 
   @Get(':id')

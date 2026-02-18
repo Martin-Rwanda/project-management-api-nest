@@ -129,7 +129,7 @@ describe('TasksService', () => {
       mockOrganizationsService.isMember.mockResolvedValue(true);
       mockTaskRepository.findByProjectId.mockResolvedValue([mockTask]);
 
-      const result = await service.findByProjectId('project-1', {}, 'user-1');
+      const result = await service.findByProjectId('project-1', {}, 'user-1', { page: 1, limit: 10 });
 
       expect(result).toEqual([mockTask]);
     });
@@ -138,7 +138,7 @@ describe('TasksService', () => {
       mockProjectsService.findById.mockResolvedValue(mockProject);
       mockOrganizationsService.isMember.mockResolvedValue(false);
 
-      await expect(service.findByProjectId('project-1', {}, 'user-1')).rejects.toThrow(
+      await expect(service.findByProjectId('project-1', {}, 'user-1', { page: 1, limit: 10 })).rejects.toThrow(
         ForbiddenException,
       );
     });

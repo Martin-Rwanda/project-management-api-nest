@@ -1,4 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { PaginationDto } from 'common/dto/pagination.dto';
+import { PaginatedResult } from 'common/interfaces/paginated-result.interface';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { ProjectsService } from '../projects/projects.service';
 import { CreateTaskDto, FilterTaskDto, UpdateTaskDto } from './dto';
@@ -42,7 +44,8 @@ export class TasksService {
     projectId: string,
     filters: FilterTaskDto,
     userId: string,
-  ): Promise<Task[]> {
+    pagination: PaginationDto,
+  ): Promise<PaginatedResult<Task>> {
     const project = await this.projectsService.findById(projectId);
 
     const isMember = await this.organizationsService.isMember(project.organizationId, userId);
@@ -51,12 +54,11 @@ export class TasksService {
       throw new ForbiddenException('You are not a member of this organization');
     }
 
-    return this.taskRepository.findByProjectId(projectId, filters);
+    return this.taskRepository.findByProjectId(projectId, filters, pagination);
   }
 
   async update(id: string, updateTaskDto: UpdateTaskDto, userId: string): Promise<Task> {
     const task = await this.findById(id);
-
     const project = await this.projectsService.findById(task.projectId);
 
     const isMember = await this.organizationsService.isMember(project.organizationId, userId);

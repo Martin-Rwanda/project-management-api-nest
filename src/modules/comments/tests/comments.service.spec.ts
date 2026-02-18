@@ -1,7 +1,4 @@
-import {
-  ForbiddenException,
-  NotFoundException,
-} from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrganizationsService } from '../../organizations/organizations.service';
 import { ProjectsService } from '../../projects/projects.service';
@@ -99,10 +96,7 @@ describe('CommentsService', () => {
       mockOrganizationsService.isMember.mockResolvedValue(false);
 
       await expect(
-        service.create(
-          { content: 'This task needs more details', taskId: 'task-1' },
-          'user-1',
-        ),
+        service.create({ content: 'This task needs more details', taskId: 'task-1' }, 'user-1'),
       ).rejects.toThrow(ForbiddenException);
 
       expect(mockCommentRepository.create).not.toHaveBeenCalled();
@@ -121,9 +115,7 @@ describe('CommentsService', () => {
     it('should throw NotFoundException if comment not found', async () => {
       mockCommentRepository.findById.mockResolvedValue(null);
 
-      await expect(service.findById('wrong-id')).rejects.toThrow(
-        NotFoundException,
-      );
+      await expect(service.findById('wrong-id')).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -144,9 +136,7 @@ describe('CommentsService', () => {
       mockProjectsService.findById.mockResolvedValue(mockProject);
       mockOrganizationsService.isMember.mockResolvedValue(false);
 
-      await expect(
-        service.findByTaskId('task-1', 'user-1'),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.findByTaskId('task-1', 'user-1')).rejects.toThrow(ForbiddenException);
     });
   });
 
@@ -156,11 +146,7 @@ describe('CommentsService', () => {
       mockCommentRepository.findById.mockResolvedValue(mockComment);
       mockCommentRepository.update.mockResolvedValue(updated);
 
-      const result = await service.update(
-        'comment-1',
-        { content: 'Updated content' },
-        'user-1',
-      );
+      const result = await service.update('comment-1', { content: 'Updated content' }, 'user-1');
 
       expect(result.content).toEqual('Updated content');
     });
@@ -176,9 +162,9 @@ describe('CommentsService', () => {
     it('should throw NotFoundException if comment not found', async () => {
       mockCommentRepository.findById.mockResolvedValue(null);
 
-      await expect(
-        service.update('wrong-id', { content: 'Updated' }, 'user-1'),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.update('wrong-id', { content: 'Updated' }, 'user-1')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -195,17 +181,13 @@ describe('CommentsService', () => {
     it('should throw ForbiddenException if user is not the creator', async () => {
       mockCommentRepository.findById.mockResolvedValue(mockComment);
 
-      await expect(
-        service.delete('comment-1', 'other-user'),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.delete('comment-1', 'other-user')).rejects.toThrow(ForbiddenException);
     });
 
     it('should throw NotFoundException if comment not found', async () => {
       mockCommentRepository.findById.mockResolvedValue(null);
 
-      await expect(
-        service.delete('wrong-id', 'user-1'),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.delete('wrong-id', 'user-1')).rejects.toThrow(NotFoundException);
     });
   });
 });
