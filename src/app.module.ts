@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { appConfig, databaseConfig, jwtConfig } from './config';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { appConfig, databaseConfig, jwtConfig } from './config';
         logging: configService.get<string>('app.nodeEnv') === 'development',
       }),
     }),
+    AuthModule,
+    UsersModule,
   ],
 })
 export class AppModule {}
