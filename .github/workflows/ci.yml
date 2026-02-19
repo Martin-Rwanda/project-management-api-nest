@@ -206,6 +206,23 @@ jobs:
           REDIS_HOST: localhost
           REDIS_PORT: 6379
 
+      - name: Run database migrations
+        run: npm run migration:run
+        env:
+          PORT: 3000
+          NODE_ENV: test
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: postgres123
+          DB_NAME: project_management_db
+          JWT_SECRET: ci_jwt_secret
+          JWT_EXPIRES_IN: 15m
+          JWT_REFRESH_SECRET: ci_jwt_refresh_secret
+          JWT_REFRESH_EXPIRES_IN: 7d
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+
       - name: Run E2E tests
         run: npm run test:e2e
         env:
