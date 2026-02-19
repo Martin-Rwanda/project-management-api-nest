@@ -12,11 +12,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../auth/guards';
 import { CreateTaskDto, FilterTaskDto, UpdateTaskDto } from './dto';
-import { TaskPriority, TaskStatus } from './entities/task.entity';
-import { Task } from './entities/task.entity';
+import { Task, TaskPriority, TaskStatus } from './entities/task.entity';
 import { TasksService } from './tasks.service';
 
 interface JwtUser {
@@ -42,27 +43,41 @@ export class TasksController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all tasks for a project' })
+  @ApiOperation({ summary: 'Get all tasks for a project with pagination' })
   @ApiQuery({ name: 'projectId', required: true, type: String })
   @ApiQuery({ name: 'status', required: false, enum: TaskStatus })
   @ApiQuery({ name: 'priority', required: false, enum: TaskPriority })
   @ApiQuery({ name: 'assignedTo', required: false, type: String })
-  @ApiResponse({ status: 200, description: 'Returns all tasks' })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  @ApiResponse({ status: 200, description: 'Returns paginated tasks' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   async findAll(
     @Query('projectId') projectId: string,
-    @Query() filters: FilterTaskDto,
+    @Query('status') status: string,
+    @Query('priority') priority: string,
+    @Query('assignedTo') assignedTo: string,
+    @Query('page') page: string,
+    @Query('limit') limit: string,
     @CurrentUser() user: JwtUser,
-  ): Promise<Task[]> {
-    return this.tasksService.findByProjectId(projectId, filters, user.id);
-  }
+  ): Promise<PaginatedResult<Task>> {
+    const filters: FilterTaskDto = {
+      status: status as TaskStatus,
+      priority: priority as TaskPriority,
+      assignedTo,
+    };
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Get task by id' })
-  @ApiResponse({ status: 200, description: 'Returns a task' })
-  @ApiResponse({ status: 404, description: 'Task not found' })
-  async findOne(@Param('id') id: string): Promise<Task> {
-    return this.tasksService.findById(id);
+    const pagination: PaginationDto = {
+      page: page ? parseInt(page, 10) : 1,
+      limit: limit ? parseInt(limit, 10) : 10,
+    };
+
+    return this.tasksService.findByProjectId(
+      projectId,
+      filters,
+      user.id,
+      pagination,
+    );
   }
 
   @Patch(':id')
