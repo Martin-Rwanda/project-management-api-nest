@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PaginationDto } from 'common/dto/pagination.dto';
-import { PaginatedResult } from 'common/interfaces/paginated-result.interface';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
 import { FilterTaskDto } from '../dto';
 import { Task } from '../entities/task.entity';
 
@@ -30,7 +30,8 @@ export class TaskRepository {
     filters: FilterTaskDto,
     pagination: PaginationDto,
   ): Promise<PaginatedResult<Task>> {
-    const { page = 1, limit = 10 } = pagination;
+    const page = Number(pagination.page ?? 1);
+    const limit = Number(pagination.limit ?? 10);
     const skip = (page - 1) * limit;
 
     const query = this.repository
@@ -56,7 +57,7 @@ export class TaskRepository {
     }
 
     const [data, total] = await query
-      .orderBy('task.created_at', 'DESC')
+      .orderBy('task.createdAt', 'DESC')
       .skip(skip)
       .take(limit)
       .getManyAndCount();

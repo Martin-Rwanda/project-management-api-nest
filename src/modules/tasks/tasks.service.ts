@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { PaginationDto } from 'common/dto/pagination.dto';
-import { PaginatedResult } from 'common/interfaces/paginated-result.interface';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { ProjectsService } from '../projects/projects.service';
 import { CreateTaskDto, FilterTaskDto, UpdateTaskDto } from './dto';
