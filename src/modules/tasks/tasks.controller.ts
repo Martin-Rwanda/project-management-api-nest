@@ -72,12 +72,7 @@ export class TasksController {
       limit: limit ? parseInt(limit, 10) : 10,
     };
 
-    return this.tasksService.findByProjectId(
-      projectId,
-      filters,
-      user.id,
-      pagination,
-    );
+    return this.tasksService.findByProjectId(projectId, filters, user.id, pagination);
   }
 
   @Patch(':id')

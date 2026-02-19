@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
 import { LoggingInterceptor } from 'src/common/interceptors/logging.interceptor';
+import { DataSource } from 'typeorm';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
@@ -21,6 +22,10 @@ async function bootstrap(): Promise<void> {
 
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new LoggingInterceptor());
+
+  // when going t deploy
+  const dataSource = app.get(DataSource);
+  await dataSource.runMigrations();
 
   // Swagger setup
   const config = new DocumentBuilder()

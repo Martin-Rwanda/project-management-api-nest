@@ -10,6 +10,7 @@ import { OrganizationsModule } from './modules/organizations/organizations.modul
 import { ProjectsModule } from './modules/projects/projects.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { CommentsModule } from './modules/comments/comments.module';
+import { HealthController } from './health/controller';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { CommentsModule } from './modules/comments/comments.module';
     TasksModule,
     CommentsModule,
   ],
+  controllers: [HealthController],
   providers: [
     {
       provide: APP_GUARD,
