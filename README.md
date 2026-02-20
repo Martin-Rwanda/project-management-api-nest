@@ -204,3 +204,9 @@ src/
 ## 👨‍💻 Author
 
 **Martin** — [GitHub](https://github.com/Martin-Rwanda)
+
+## 🌐 Live Demo
+
+- **API Base URL:** https://project-management-api-949m.onrender.com/api/v1
+- **Swagger Documentation:** https://project-management-api-949m.onrender.com/api/docs
+- **Health Check:** https://project-management-api-949m.onrender.com/api/v1/health
